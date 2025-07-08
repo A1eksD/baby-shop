@@ -1,70 +1,53 @@
 # E-Commerce Project For Baby Tools
-A samll project with basic CRUD operatiosn.
+A small project with basic CRUD operations. In this application you can create baby-product listings and sort them in the admin area. The app was built with Django, which is based on Python and lets you spin up the project quickly.
 
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
 1. [Hints](#hints)
-1. [Photos](#photos)
-1. [Usage](#usage)
-  - [Install Venv and Project](#install-venv-and-project)
-  - [Run Docker](#run-docker)
-  - [Edit container](#edit-container)
+1. [Quickstart](#quickstart)
+  - [Download Repository](#download-repository)
+1. [Usage Docker](#usage-docker)
+  - [Install Docker](#install-docker)
+  - [Create Dockerfile](#create-dockerfile)
+  - [Build Docker Image](#build-docker-image)
+  - [Start Docker Image](#start-docker-image)
   - [How to connect](#how-to-connect)
+1. [Photos](#photos)
+1. [Useful commands](#useful-commands)
 
 
-### Prerequisites
+## Prerequisites
 
 - Python 3.9
 - Django 4.0.2
 - Venv
+- Docker
+- git
 
 ---
 
-### Hints
-py
+## Hints
 This section will cover some hot tips when trying to interacting with this repository:
 
 - Settings & Configuration for Django can be found in `babyshop_app/babyshop/settings.py`
-- Routing: Routing information, such as available routes can be found from any `urls.py` file in `babyshop_app` and corresponding subdirectories
+- Routing information, such as available routes can be found from any `urls.py` file in `babyshop_app` and corresponding subdirectories
 
 ---
 
-### Photos
+## Quickstart
 
-##### Home Page with login
+1. Download Repository
+```powershell
+git clone https://github.com/A1eksD/baby-shop
+```
 
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080815407.jpg"></img>
-##### Home Page with filter
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080840305.jpg"></img>
-##### Product Detail Page
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080934541.jpg"></img>
-
-##### Home Page with no login
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080953570.jpg"></img>
-
-
-##### Register Page
-
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323081016022.jpg"></img>
-
-
-##### Login Page
-
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323081044867.jpg"></img>
-
----
-
-## Install Venv and Project
-> [!Note]
-> local
-
-#### Open in your Terminal/Powershell and got to your project folder and insert the folowing prompt:
+2. Create Python Venv
 ```powershell
 python -m venv venv
 ```
 
-#### Then start your venv.
+3. Activate Python Venv
 Windows:
 ```powershell
 .\venv\Scripts\activate
@@ -74,19 +57,22 @@ Mac / Linux:
 source ./venv/bin/activate
 ```
 > [!Note]
-> Check the path for yourself.
+> Replace the path to the Python Virtual Environment ro match yours.
 
-#### Copy now the project withs HTTPS or SSH in your Folder.
-```powershell
-git clone <the key>
-```
-
-#### Install now the requirements:
+4. Install Requirements
 ```powershell
 pip install -r </path/to>/requirements.txt
 ```
 
-#### With this prompt you can start the applicaltion and check it out:
+5. Install Database
+```powershell
+python manage.py makemigrations
+python manage.py migrate
+```
+> [!Note]
+> You need to be in the folder with your manage.py for this prompt.
+
+6. Start the application
 ```powershell
 python manage.py runserver
 ```
@@ -95,22 +81,26 @@ python manage.py runserver
 
 ---
 
-## Create Docker file
+## Usage Docker
 
-#### if Docker is not yet installed.
+### Install Docker
+(If Docker is not yet installed)
 ```powershell
 sudo apt update
 sudo apt upgrade
 sudo apt install docker.io
 ```
 
-#### Create a file named `Dockerfile` at the same level as the `.gitignore`.
+### Create Dockerfile
 
-- The file should look like this:
+Create Docker file named `Dockerfile` at the same level as the `.gitignore`.
+
+### Build Docker Image
+- Fill the file with the following information:
 
 ```powershell
 # 1. Base image
-FROM python:3.10-alpine
+FROM python:3.9-alpine
 
 # 2. Useful Python defaults
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -125,7 +115,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 5. Copy the rest of the application code
-COPY . $WORKDIR
+COPY . ${WORKDIR}
 
 # 6. Expose port 8082
 EXPOSE ${APP_PORT}
@@ -150,17 +140,23 @@ CMD ["sh", "-c", "python babyshop_app/manage.py makemigrations --noinput && \
 
 ```
 
-- Also check your `.dockerignore` if the file fit your requirements.
+> [!Note]
+> Also check whether you need/want to have a `.dockerignore` file. Place it at the same level as the `Dockerfile`. If you're not sure whether you need one, you can use this template: https://github.com/A1eksD/baby-shop/blob/main/.dockerignore
 
 --- 
 
-## Run Docker
-- If you want to save files (optional) 
+### Start Docker Image
+1. Create Docker Volume (optional) 
 ```powershell
-docker volume create <folder_name>
+docker volume create <volume_name>
 ```
 
-- Run container on server
+2. Create Docker Image
+```powershell
+docker build -t babyshop:latest --build-arg APP_PORT=${APP_PORT} .
+```
+
+3. Run container on server
 ```powershell
 docker run -p ${APP_PORT}:${APP_PORT} \
   -e DJANGO_SUPERUSER_USERNAME=${ADMIN_NAME} \
@@ -171,29 +167,44 @@ docker run -p ${APP_PORT}:${APP_PORT} \
 
 ---
 
-## Edit container
+### How to connect
 
-#### create volume
-```powershell
-docker volume create babyshop_db
-```
-#### create
-```powershell
-docker volume create <volume-name>
-```
+Search in your browser for `<server-ip>:<port>`.
 
-#### shows all volumes
+---
+
+## Photos
+
+### Home Page with login
+<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080815407.jpg"></img>
+
+### Home Page with filter
+<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080840305.jpg"></img>
+
+### Product Detail Page
+<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080934541.jpg"></img>
+
+### Home Page with no login
+<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080953570.jpg"></img>
+
+
+### Register Page
+<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323081016022.jpg"></img>
+
+
+### Login Page
+<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323081044867.jpg"></img>
+
+---
+
+### Useful commands
+
+Shows all volumes
 ```powershell
 docker volume ls
 ```
 
-#### delete one or more
+Delete one or more
 ```powershell
 docker volume rm <volume-name>
 ```
-
----
-
-## How to connect
-
-#### Go to your browser and search for `<server-ip>:<port>`.
