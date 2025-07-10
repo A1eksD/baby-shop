@@ -97,7 +97,7 @@ You can use the existing `Dockerfile`.
 
 Create Docker Image
 ```powershell
-docker build -t babyshop:latest --build-arg APP_PORT=${APP_PORT} .
+docker build --build-arg APP_PORT=${CONTAINER_PORT} -t babyshop .
 ```
 
 --- 
