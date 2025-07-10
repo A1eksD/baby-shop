@@ -1,10 +1,12 @@
 # 1. Base image
 FROM python:3.9-alpine
 
+ARG APP_PORT=8082
+
 # 2. Useful Python defaults + Super-User Defaults + Port
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    APP_PORT=8082 \
+    APP_PORT=${APP_PORT} \
     DJANGO_SUPERUSER_USERNAME=admin \
     DJANGO_SUPERUSER_PASSWORD=admin \
     DJANGO_SUPERUSER_EMAIL=admin@admin.com
@@ -26,7 +28,7 @@ VOLUME /app/data
 ENV MEDIA_ROOT=/app/data/media
 
 # 7. Expose port
-EXPOSE 8082
+EXPOSE ${APP_PORT}
 
 # 8. On container start:
 #    • Migrations
@@ -37,4 +39,4 @@ CMD ["sh", "-c", "python babyshop_app/manage.py makemigrations --noinput && \
                   python babyshop_app/manage.py createsuperuser --noinput \
                         --username ${DJANGO_SUPERUSER_USERNAME} \
                         --email ${DJANGO_SUPERUSER_EMAIL} || true && \
-                  python babyshop_app/manage.py runserver 0.0.0.0:8082"]
+                  python babyshop_app/manage.py runserver 0.0.0.0:${APP_PORT}"]
