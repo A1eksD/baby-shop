@@ -5,12 +5,9 @@ A small project with basic CRUD operations. In this application you can create b
 
 1. [Prerequisites](#prerequisites)
 1. [Hints](#hints)
-1. [Download Repository](#download-repository)
-1. [Install Docker](#install-docker)
-1. [Create Dockerfile](#create-dockerfile)
-1. [Build Docker Image](#build-docker-image)
-1. [Start Docker Container](#start-docker-container)
-1. [How to connect](#how-to-connect)
+1. [Quickstart](#quickstart)
+1. [Quick usage](#quick-usage)
+1. [Usage Docker](#usage-docker)
 1. [Photos](#photos)
 1. [Useful commands](#useful-commands)
 
@@ -33,7 +30,9 @@ This section will cover some hot tips when trying to interacting with this repos
 
 ---
 
-## Download Repository
+## Quickstart
+
+### Quick usage
 
 1. Download Repository
 ```powershell
@@ -41,6 +40,9 @@ git clone https://github.com/A1eksD/baby-shop
 ```
 
 2. Move than to the baby-shop folder
+```powershell
+cd baby-shop
+```
 
 3. Create Python Venv
 ```powershell
@@ -78,7 +80,9 @@ python manage.py runserver
 
 ---
 
-## Install Docker
+## Usage Docker
+
+### Install Docker
 (If Docker is not yet installed)
 ```powershell
 sudo apt update
@@ -88,12 +92,12 @@ sudo apt install docker.io
 
 ---
 
-## Create Dockerfile
+### Create Dockerfile
 You can use the existing `Dockerfile`.
 
 ---
 
-## Build Docker Image
+### Build Docker Image
 
 Create Docker Image
 ```powershell
@@ -102,7 +106,7 @@ docker build --build-arg APP_PORT=${CONTAINER_PORT} -t babyshop .
 
 --- 
 
-## Start Docker Container
+### Start Docker Container
 
 Run container on server
 ```powershell
@@ -115,7 +119,7 @@ docker run -p ${PORT}:${APP_PORT} \
 
 ---
 
-## How to connect
+### How to connect
 
 Search in your browser for `<server-ip>:<port>`.
 
