@@ -5,7 +5,6 @@ A small project with basic CRUD operations. In this application you can create b
 
 1. [Prerequisites](#prerequisites)
 1. [Hints](#hints)
-1. [Quickstart](#quickstart)
 1. [Quick usage](#quick-usage)
 1. [Usage Docker](#usage-docker)
 1. [Photos](#photos)
@@ -30,9 +29,7 @@ This section will cover some hot tips when trying to interacting with this repos
 
 ---
 
-## Quickstart
-
-### Quick usage
+## Quick usage
 
 1. Download Repository
 ```powershell
@@ -110,7 +107,7 @@ docker build --build-arg APP_PORT=${CONTAINER_PORT} -t babyshop .
 
 Run container on server
 ```powershell
-docker run -p ${PORT}:${APP_PORT} \
+docker run -p ${PORT}:${CONTAINER_PORT} \
   -e DJANGO_SUPERUSER_USERNAME=${ADMIN_NAME} \
   -e DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD} \
   -e DJANGO_SUPERUSER_EMAIL=${ADMIN_EMAIL} \
